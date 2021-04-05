@@ -4,44 +4,59 @@ function proceedSubj() {
 
   // menambah tampilan teks sebelum input nilai
   var text = document.createElement("h4");
-  text.innerHTML = "Masukkan nilai dan SKS";
+  text.innerHTML = "Masukkan nama matkul, nilai, dan SKS";
   document.getElementById("pretext").appendChild(text);
 
   // menambah keterangan kolom input
   var textNilai = document.createElement("h5");
   var textSks = document.createElement("h5");
+  var textName = document.createElement("h5");
   textNilai.innerHTML = "Nilai";
   textSks.innerHTML = "SKS";
+  textName.innerHTML = "Nama";
   document.getElementById("container").appendChild(textNilai);
   document.getElementById("containerSks").appendChild(textSks);
+  document.getElementById("containerName").appendChild(textName);
 
   // iterasi untuk kolom input
   var numOfSubj = document.getElementById("numOfSubj").value;
   for (i = 0; i < numOfSubj; i++) {
     var inputNilai = document.createElement("input");
     var inputSks = document.createElement("input");
+    var inputName = document.createElement("input");
     document.getElementById("container").appendChild(inputNilai);
     document.getElementById("containerSks").appendChild(inputSks);
+    document.getElementById("containerName").appendChild(inputName);
   }
   // menangkap error child terakhir tidak terbaca di iterasi
-  // kolom nilai
-  for (j = 0; j <= numOfSubj; j++) {
-    var x = document.getElementsByTagName("input")[j];
+  // kolom nilai (tengah)
+  for (j = 0; j < numOfSubj; j++) {
+    var x = document.getElementsByTagName("input")[j + parseInt(numOfSubj) + 1];
     if (x.id == "") {
-      x.id = "inputNilai" + j;
+      x.id = "inputNilai" + (j + 1);
       x.setAttribute("class", "form-control mb-3");
       x.setAttribute("type", "text");
       x.setAttribute("placeholder", "Masukkan nilai 0 s/d 4");
     }
   }
-  // kolom sks
+  // kolom sks (paling kanan)
   for (k = 0; k <= numOfSubj; k++){    
-    var y = document.getElementsByTagName("input")[parseInt(numOfSubj) + k];
+    var y = document.getElementsByTagName("input")[k + 2*parseInt(numOfSubj)];
     if (y.id == "") {
       y.id = "inputSks" + k;
       y.setAttribute("class", "form-control mb-3");
       y.setAttribute("type", "text");
       y.setAttribute("placeholder", "Masukkan SKS matkul " + k);
+    }
+  }
+  // kolom nama (paling kiri)
+  for (l = 0; l <= numOfSubj; l++){    
+    var z = document.getElementsByTagName("input")[l];
+    if (z.id == "") {
+      z.id = "inputName" + l;
+      z.setAttribute("class", "form-control mb-3");
+      z.setAttribute("type", "text");
+      z.setAttribute("placeholder", "Masukkan nama matkul " + l);
     }
   }
 
