@@ -8,6 +8,11 @@
       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
+    <style>
+      body{
+        margin: 10px 10px;
+      }
+    </style>
   </head>
   <body>
     <div class="text-center mb-5 pt-3">
@@ -27,7 +32,7 @@
         </div>
       </div>
       <div class="text-center mb-3">
-        <button class="btn btn-primary rounded" onclick="proceedSubj()">
+        <button class="btn btn-primary rounded" onclick="proceedSubj()" id="proceedSubj">
           Proses
         </button>
       </div>
@@ -35,11 +40,18 @@
 
     <!-- tempat render element baru -->
     <div class="row mb-3">
+      <span class="mb-3 mx-auto text-center" id="pretext"></span>
       <div
         class="col-sm-6 mb-3 mx-auto text-center"
         id="container"
         style="display: flex; flex-direction: column"
       ></div>
+      <div
+        class="col-sm-6 mb-3 mx-auto text-center"
+        id="containerSks"
+        style="display: flex; flex-direction: column"
+      ></div>
+      <span class="mb-3 mx-auto text-center" id="posttext"></span>
     </div>
 
     <!-- tempat render skor final dan grade-nya -->

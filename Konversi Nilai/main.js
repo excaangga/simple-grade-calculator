@@ -1,52 +1,83 @@
-function proceedSubj() {
+function proceedSubj() {  
+  // mematikan button "Proses"
+  document.getElementById("proceedSubj").disabled = true;
+
   // menambah tampilan teks sebelum input nilai
   var text = document.createElement("h4");
-  text.innerHTML = "Masukkan masing-masing nilai";
-  document.getElementById("container").appendChild(text);
+  text.innerHTML = "Masukkan nilai dan SKS";
+  document.getElementById("pretext").appendChild(text);
+
+  // menambah keterangan kolom input
+  var textNilai = document.createElement("h5");
+  var textSks = document.createElement("h5");
+  textNilai.innerHTML = "Nilai";
+  textSks.innerHTML = "SKS";
+  document.getElementById("container").appendChild(textNilai);
+  document.getElementById("containerSks").appendChild(textSks);
 
   // iterasi untuk kolom input
   var numOfSubj = document.getElementById("numOfSubj").value;
   for (i = 0; i < numOfSubj; i++) {
-    var input = document.createElement("input");
-    document.getElementById("container").appendChild(input);
+    var inputNilai = document.createElement("input");
+    var inputSks = document.createElement("input");
+    document.getElementById("container").appendChild(inputNilai);
+    document.getElementById("containerSks").appendChild(inputSks);
   }
   // menangkap error child terakhir tidak terbaca di iterasi
+  // kolom nilai
   for (j = 0; j <= numOfSubj; j++) {
     var x = document.getElementsByTagName("input")[j];
     if (x.id == "") {
-      x.id = "input" + j;
+      x.id = "inputNilai" + j;
       x.setAttribute("class", "form-control mb-3");
       x.setAttribute("type", "text");
       x.setAttribute("placeholder", "Masukkan nilai 0 s/d 4");
+    }
+  }
+  // kolom sks
+  for (k = 0; k <= numOfSubj; k++){    
+    var y = document.getElementsByTagName("input")[parseInt(numOfSubj) + k];
+    if (y.id == "") {
+      y.id = "inputSks" + k;
+      y.setAttribute("class", "form-control mb-3");
+      y.setAttribute("type", "text");
+      y.setAttribute("placeholder", "Masukkan SKS matkul " + k);
     }
   }
 
   // membuat tombol kalkulasi nilai
   var btn = document.createElement("button");
   btn.innerHTML = "Kalkulasi";
-  btn.id = "calcBtn";
+  btn.id = "proceedCalc";
   btn.setAttribute("class", "btn btn-primary");
   btn.setAttribute("onclick", "proceedCalc()");
-  document.getElementById("container").appendChild(btn);
+  document.getElementById("posttext").appendChild(btn);
 }
 
 // menghitung input user
 function proceedCalc() {
-  var total = 0;
+  // mematikan button "Kalkulasi"
+  document.getElementById("proceedCalc").disabled = true;
+  // var untuk perhitungan SKS*nilai matkul terkait
+  var totalAtas = 0;
+  var totalBawah = 0;
   var numOfSubj = document.getElementById("numOfSubj").value;
   for (i = 1; i <= numOfSubj; i++) {
-    x = document.getElementById("input" + i).value;
+    x = document.getElementById("inputNilai" + i).value;
+    y = document.getElementById("inputSks" + i).value;
     // kondisional untuk memberi limit input user
-    if (x < 0 || x > 4 || isNaN(x)) {
+    if (x < 0 || x > 4 || isNaN(x) || isNaN(y) || !x || !y) {
       var warning = document.createElement("h5");
       warning.setAttribute("class", "mt-3");
-      warning.innerHTML = "Masukan Anda salah, silakan refresh dan ulang";
-      document.getElementById("container").appendChild(warning);
+      warning.innerHTML = "Masukan nilai Anda salah, silakan refresh dan ulang";
+      document.getElementById("posttext").appendChild(warning);
       return;
     }
-    total += parseFloat(x);
+    // IPS = SUM(SKS*NilaiAkhirMatkul)/SUM(SKS)
+    totalAtas += parseFloat(x) * parseFloat(y);
+    totalBawah += parseFloat(y);
   }
-  var finalScore = total / numOfSubj;
+  var finalScore = totalAtas / totalBawah;
 
   document.getElementById("finalScore").innerHTML =
     "Nilai akhir Anda = " + finalScore;
